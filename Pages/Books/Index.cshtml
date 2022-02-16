@@ -1,0 +1,83 @@
+﻿
+@page  "/{id:int?}"
+@model Library.Pages.Books.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Books</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].BookTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].PublishingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Publisher.PublisherName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].BookCategories)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.BookD.Books)
+        {
+            string selectedRow = "";
+            if (item.BookID == Model.BookID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublishingDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher.PublisherName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @{
+                        foreach (var category in item.BookCategories)
+                        {
+                            @category.Category.CategoryID @: @category.Category.CategoryName <br />
+                        }
+                    }
+                </td>
+
+
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.BookID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.BookID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.BookID">Delete</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+</table>
